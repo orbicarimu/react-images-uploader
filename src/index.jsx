@@ -20,7 +20,6 @@ export default class ImagesUploader extends Component {
 	input: ?HTMLInputElement;
 
 	static propTypes = {
-		url: PropTypes.string.isRequired,
 		dataName: PropTypes.string,
 		headers: PropTypes.object,
 		classNamespace: PropTypes.string,
@@ -316,77 +315,9 @@ export default class ImagesUploader extends Component {
 	}
 
 	@autobind
-	async loadImages(files: FileList, url: string, onLoadEnd?: Function): any {
+	async loadImages(files: FileList, url: Function, onLoadEnd?: Function): any {
 		if (url) {
-			try {
-				const imageFormData = new FormData();
-
-				for (let i = 0; i < files.length; i++) {
-					imageFormData.append(this.props.dataName, files[i], files[i].name);
-				}
-
-				let response = await fetch(url, {
-					method: 'POST',
-					credentials: 'include',
-					body: imageFormData,
-					headers: this.props.headers
-				});
-
-				if (response && response.status && response.status === 200) {
-					response = await response.json();
-					const multiple = this.props.multiple;
-					if (response instanceof Array || typeof response === 'string') {
-						let imagePreviewUrls = [];
-						if (multiple === false) {
-							imagePreviewUrls = response instanceof Array ? response : [response];
-						} else {
-							imagePreviewUrls = this.state.imagePreviewUrls.concat(response);
-						}
-						this.setState({
-							imagePreviewUrls,
-							optimisticPreviews: [],
-							loadState: 'success',
-						});
-						if (onLoadEnd && typeof onLoadEnd === 'function') {
-							onLoadEnd(false, response);
-						}
-					} else {
-						const err = {
-							message: 'invalid response type',
-							response,
-							fileName: 'ImagesUploader',
-						};
-						this.setState({
-							loadState: 'error',
-							optimisticPreviews: [],
-						});
-						if (onLoadEnd && typeof onLoadEnd === 'function') {
-							onLoadEnd(err);
-						}
-					}
-				} else {
-					const err = {
-						message: 'server error',
-						status: response ? response.status : false,
-						fileName: 'ImagesUploader',
-					};
-					this.setState({
-						loadState: 'error',
-						optimisticPreviews: [],
-					});
-					if (onLoadEnd && typeof onLoadEnd === 'function') {
-						onLoadEnd(err);
-					}
-				}
-			} catch (err) {
-				if (onLoadEnd && typeof onLoadEnd === 'function') {
-					onLoadEnd(err);
-				}
-				this.setState({
-					loadState: 'error',
-					optimisticPreviews: [],
-				});
-			}
+			console.log(url);
 		}
 	}
 
