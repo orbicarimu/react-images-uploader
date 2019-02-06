@@ -80,7 +80,7 @@ export default class ImagesUploader extends Component {
 		}),
 	}
 
-	getDefaultProps = () => {
+	getDefaultProps = () => ({
 		dataName: 'imageFiles',
 		headers:{},
 		classNames: {},
@@ -93,7 +93,7 @@ export default class ImagesUploader extends Component {
 		notificationBgColor: 'rgba(0, 0, 0, 0.3)',
 		notificationColor: '#fafafa',
 		classNamespace: 'iu-',
-	};
+	})
 
 	constructor(props: Object) {
 		super(props);
