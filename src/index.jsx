@@ -80,7 +80,7 @@ export default class ImagesUploader extends Component {
 		}),
 	}
 
-	static defaultProps = {
+	getDefaultProps = () => {
 		dataName: 'imageFiles',
 		headers:{},
 		classNames: {},
